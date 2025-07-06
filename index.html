@@ -53,10 +53,12 @@
       border-bottom: 1px dashed var(--neon-green);
       padding-bottom: 0.3em;
       text-shadow: 0 0 3px var(--neon-purple);
+      margin-top: 1.5em;
     }
 
     h3 {
       color: var(--neon-cyan);
+      margin-top: 1em;
     }
 
     a {
@@ -154,14 +156,14 @@
     }
 
     .terminal {
-  background-color: rgba(0, 0, 0, 0.7);
-  border: 1px solid var(--terminal-green);
-  padding: 2em 1em 1em 1em; /* Aumentamos el padding superior */
-  margin: 1.5em 0;
-  font-family: 'Courier New', monospace;
-  position: relative;
-  overflow: hidden;
-}
+      background-color: rgba(0, 0, 0, 0.7);
+      border: 1px solid var(--terminal-green);
+      padding: 2em 1em 1em 1em;
+      margin: 1.5em 0;
+      font-family: 'Courier New', monospace;
+      position: relative;
+      overflow: hidden;
+    }
 
     .terminal::before {
       content: "";
@@ -223,6 +225,19 @@
       color: var(--terminal-green);
       text-shadow: 0 0 5px var(--terminal-green);
       margin-bottom: 0.5em;
+    }
+
+    .cert-item, .achievement-item {
+      margin-bottom: 1em;
+      padding-left: 1em;
+      border-left: 2px solid var(--neon-green);
+    }
+
+    .cert-id {
+      font-size: 0.8em;
+      color: var(--neon-cyan);
+      display: block;
+      margin-top: 0.3em;
     }
 
     @keyframes flicker {
@@ -287,6 +302,15 @@
       opacity: 0.1;
       pointer-events: none;
     }
+
+    .highlight {
+      animation: highlight-pulse 2s infinite alternate;
+    }
+
+    @keyframes highlight-pulse {
+      from { opacity: 0.7; }
+      to { opacity: 1; text-shadow: 0 0 10px var(--terminal-green); }
+    }
   </style>
 </head>
 <body>
@@ -300,6 +324,8 @@
     <div class="nav">
       <button class="nav-btn" onclick="showSection('about')">About Me</button>
       <button class="nav-btn" onclick="showSection('skills')">Skills</button>
+      <button class="nav-btn" onclick="showSection('certs')">Certifications</button>
+      <button class="nav-btn" onclick="showSection('achievements')">Achievements</button>
       <button class="nav-btn" onclick="showSection('writeups')">Writeups</button>
       <button class="nav-btn" onclick="showSection('links')">Links</button>
     </div>
@@ -351,18 +377,91 @@
           </ul>
         </div>
       </div>
-      
+    </div>
+    
+    <!-- Certifications Section -->
+    <div id="certs" class="section">
       <div class="box">
-        <h2>Certifications & Achievements</h2>
+        <h2>Certifications</h2>
         
         <div class="terminal">
-          <div class="prompt">root@philosopher:<span class="command"> achievements --show</span></div>
-          <ul>
-            <li>Ranked in Top 5% on TryHackMe</li>
-            <li>eJPTv2 Certified</li>
-            <li>Completed 100+ HackTheBox/TryHackMe machines</li>
-            <li>Participated in 20+ CTF competitions</li>
-          </ul>
+          <div class="prompt">root@philosopher:<span class="command"> certs --list</span></div>
+          
+          <div class="cert-item highlight">
+            <strong>eJPTv2 (INE)</strong> - Junior Penetration Tester (in progress - exam expected Q4 2025)
+          </div>
+          
+          <div class="cert-item">
+            <strong>ICCA (INE)</strong> - Certified Cybersecurity Associate (in preparation)
+          </div>
+          
+          <div class="cert-item">
+            <strong>Hack4U - Linux Environment Customization</strong>
+            <span class="cert-id">Verify ID: 2834-6242-5500-3604</span>
+          </div>
+          
+          <div class="cert-item">
+            <strong>Hack4U - Linux and Bash</strong>
+            <span class="cert-id">Verify ID: 6110-3981-2104-2052</span>
+          </div>
+          
+          <div class="cert-item">
+            <strong>TryHackMe - Junior Penetration Tester</strong> (Path Completed)
+          </div>
+          
+          <div class="cert-item">
+            <strong>TryHackMe - Cyber Advent 2024</strong> (SOC, AD, reverse shells, detection)
+          </div>
+          
+          <div class="cert-item">
+            <strong>Hack The Box - Senior Web Penetration Tester Path</strong> (in progress)
+          </div>
+          
+          <div class="cert-item">
+            <strong>Udemy - Pentesting in Information Security</strong>
+            <span class="cert-id">View Certificate</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Achievements Section -->
+    <div id="achievements" class="section">
+      <div class="box">
+        <h2>Achievements</h2>
+        
+        <div class="terminal">
+          <div class="prompt">root@philosopher:<span class="command"> achievements --show-all</span></div>
+          
+          <div class="achievement-item highlight">
+            <strong>Top 5% Global on TryHackMe</strong>
+            <p>100+ rooms completed with strong focus on offensive security labs</p>
+          </div>
+          
+          <div class="achievement-item">
+            <strong>Completed 100+ labs in TryHackMe and Hack The Box</strong>
+            <p>Including advanced AD, privilege escalation, and firewall bypass scenarios</p>
+          </div>
+          
+          <div class="achievement-item">
+            <strong>Participated in 20+ CTF competitions</strong>
+            <p>Placing in the top 20% in most of them</p>
+          </div>
+          
+          <div class="achievement-item">
+            <strong>Built and published 8+ custom tools and scripts</strong>
+            <p>For automation and exploitation on GitHub</p>
+          </div>
+          
+          <div class="achievement-item">
+            <strong>Wrote 3 technical articles on ethical hacking</strong>
+            <p>About recon automation, with 500+ views</p>
+          </div>
+          
+          <div class="achievement-item">
+            <strong>Performed freelance pentesting for real clients</strong>
+            <p>Identified 15+ critical vulnerabilities and improved their posture by 20%</p>
+          </div>
         </div>
       </div>
     </div>
