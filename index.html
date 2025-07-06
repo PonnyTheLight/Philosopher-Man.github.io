@@ -11,18 +11,20 @@
       --neon-cyan: #00ffff;
       --neon-purple: #bd00ff;
       --dark-bg: #0a0a0a;
+      --terminal-green: #33ff33;
     }
     
     body {
       background-color: var(--dark-bg);
-      color: var(--neon-green);
+      color: var(--terminal-green);
       font-family: 'Courier New', monospace;
       margin: 0;
       padding: 0;
       overflow-x: hidden;
+      line-height: 1.5;
       background-image: 
-        radial-gradient(circle at 10% 20%, rgba(0, 255, 154, 0.05) 0%, transparent 20%),
-        radial-gradient(circle at 90% 80%, rgba(0, 255, 234, 0.05) 0%, transparent 20%);
+        radial-gradient(circle at 10% 20%, rgba(0, 255, 154, 0.03) 0%, transparent 20%),
+        radial-gradient(circle at 90% 80%, rgba(0, 255, 234, 0.03) 0%, transparent 20%);
     }
 
     .container {
@@ -53,15 +55,19 @@
       text-shadow: 0 0 3px var(--neon-purple);
     }
 
-    a {
+    h3 {
       color: var(--neon-cyan);
+    }
+
+    a {
+      color: var(--terminal-green);
       text-decoration: none;
       transition: all 0.3s;
       position: relative;
     }
 
     a:hover {
-      text-shadow: 0 0 5px var(--neon-cyan);
+      text-shadow: 0 0 5px var(--terminal-green);
     }
 
     a::after {
@@ -71,7 +77,7 @@
       height: 1px;
       bottom: 0;
       left: 0;
-      background-color: var(--neon-cyan);
+      background-color: var(--terminal-green);
       transform: scaleX(0);
       transition: transform 0.3s;
     }
@@ -84,12 +90,13 @@
       display: flex;
       gap: 1em;
       margin-bottom: 2em;
+      flex-wrap: wrap;
     }
 
     .nav-btn {
       background: transparent;
-      color: var(--neon-green);
-      border: 1px solid var(--neon-green);
+      color: var(--terminal-green);
+      border: 1px solid var(--terminal-green);
       padding: 0.5em 1em;
       cursor: pointer;
       font-family: 'Courier New', monospace;
@@ -99,8 +106,8 @@
     }
 
     .nav-btn:hover {
-      background: rgba(0, 255, 159, 0.1);
-      box-shadow: 0 0 10px var(--neon-green);
+      background: rgba(51, 255, 51, 0.1);
+      box-shadow: 0 0 10px var(--terminal-green);
     }
 
     .nav-btn::before {
@@ -125,7 +132,7 @@
     }
 
     .box {
-      border: 1px dashed var(--neon-green);
+      border: 1px dashed var(--terminal-green);
       padding: 1.5em;
       margin: 1.5em 0;
       position: relative;
@@ -133,7 +140,7 @@
     }
 
     .box:hover {
-      box-shadow: 0 0 15px rgba(0, 255, 159, 0.2);
+      box-shadow: 0 0 15px rgba(51, 255, 51, 0.2);
     }
 
     .box::before {
@@ -143,38 +150,79 @@
       left: 1em;
       background: var(--dark-bg);
       padding: 0 0.5em;
-      color: var(--neon-green);
+      color: var(--terminal-green);
     }
 
-    .gif-container {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 1em;
+    .terminal {
+      background-color: rgba(0, 0, 0, 0.7);
+      border: 1px solid var(--terminal-green);
+      padding: 1em;
       margin: 1em 0;
+      font-family: 'Courier New', monospace;
+      position: relative;
+      overflow: hidden;
     }
 
-    .gif-placeholder {
-      width: 200px;
-      height: 150px;
-      border: 1px dashed var(--neon-purple);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: var(--neon-purple);
-      transition: all 0.3s;
+    .terminal::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 1.5em;
+      background: linear-gradient(to right, #333, #222);
+      border-bottom: 1px solid #111;
     }
 
-    .gif-placeholder:hover {
-      background: rgba(189, 0, 255, 0.1);
+    .terminal::after {
+      content: "terminal";
+      position: absolute;
+      top: 0.3em;
+      left: 1em;
+      color: #ccc;
+      font-size: 0.8em;
+    }
+
+    .prompt {
+      color: var(--terminal-green);
+    }
+
+    .command {
+      color: white;
+    }
+
+    .cursor {
+      display: inline-block;
+      width: 10px;
+      height: 1em;
+      background-color: var(--terminal-green);
+      animation: blink 1s infinite;
+      vertical-align: middle;
+    }
+
+    .typewriter {
+      overflow: hidden;
+      border-right: 0.15em solid var(--terminal-green);
+      white-space: nowrap;
+      margin: 0 auto;
+      letter-spacing: 0.15em;
+      animation: typing 3.5s steps(40, end), blink-caret 0.75s step-end infinite;
     }
 
     footer {
       margin-top: 3em;
       text-align: center;
       font-size: 0.9em;
-      color: var(--neon-green);
-      border-top: 1px dashed var(--neon-green);
+      color: var(--terminal-green);
+      border-top: 1px dashed var(--terminal-green);
       padding-top: 1em;
+    }
+
+    .hack-text {
+      font-family: 'Courier New', monospace;
+      color: var(--terminal-green);
+      text-shadow: 0 0 5px var(--terminal-green);
+      margin-bottom: 0.5em;
     }
 
     @keyframes flicker {
@@ -201,6 +249,16 @@
       100% { transform: translateY(100%); }
     }
 
+    @keyframes typing {
+      from { width: 0 }
+      to { width: 100% }
+    }
+
+    @keyframes blink-caret {
+      from, to { border-color: transparent }
+      50% { border-color: var(--terminal-green); }
+    }
+
     .scanlines {
       position: fixed;
       top: 0;
@@ -212,20 +270,32 @@
       background: linear-gradient(
         to bottom,
         transparent 0%,
-        rgba(0, 255, 159, 0.05) 50%,
+        rgba(0, 255, 159, 0.03) 50%,
         transparent 100%
       );
       background-size: 100% 4px;
       animation: scanline 8s linear infinite;
     }
+
+    .matrix-effect {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      opacity: 0.1;
+      pointer-events: none;
+    }
   </style>
 </head>
 <body>
   <div class="scanlines"></div>
+  <canvas id="matrix" class="matrix-effect"></canvas>
   
   <div class="container">
     <h1>Oscar Escalante</h1>
-    <p style="color: var(--neon-cyan); font-size: 1.2em;">Offensive Security Specialist | Red Team Operator | Ethical Hacker</p>
+    <p class="hack-text">Offensive Security Specialist | Red Team Operator | Ethical Hacker</p>
     
     <div class="nav">
       <button class="nav-btn" onclick="showSection('about')">About Me</button>
@@ -238,22 +308,28 @@
     <div id="about" class="section">
       <div class="box">
         <h2>Who Am I?</h2>
-        <p>I'm Oscar Escalante, a passionate cybersecurity professional specializing in offensive security. My journey in hacking began with a deep curiosity about how systems can be broken, which evolved into a mission to help secure them.</p>
         
-        <p>What excites me most:</p>
-        <ul>
-          <li>Red Team operations and adversary simulation</li>
-          <li>Finding creative ways to bypass security controls</li>
-          <li>Web application penetration testing</li>
-          <li>Active Directory exploitation techniques</li>
-          <li>Developing custom tools for security assessments</li>
-        </ul>
+        <div class="terminal">
+          <div id="terminal-content"></div>
+          <div class="prompt">root@philosopher:<span class="command"> whoami</span><span class="cursor"></span></div>
+        </div>
         
-        <p>I believe in the hacker mindset - constantly questioning, exploring, and pushing boundaries to uncover vulnerabilities before malicious actors do.</p>
-        
-        <div class="gif-container">
-          <div class="gif-placeholder">[Your GIF Here]</div>
-          <div class="gif-placeholder">[Your GIF Here]</div>
+        <div id="about-content" style="display: none;">
+          <p>I'm Oscar Escalante, a passionate cybersecurity professional specializing in offensive security. My journey in hacking began with a deep curiosity about how systems can be broken, which evolved into a mission to help secure them.</p>
+          
+          <p>What excites me most:</p>
+          <ul>
+            <li>Red Team operations and adversary simulation</li>
+            <li>Finding creative ways to bypass security controls</li>
+            <li>Web application penetration testing</li>
+            <li>Active Directory exploitation techniques</li>
+            <li>Developing custom tools for security assessments</li>
+          </ul>
+          
+          <div class="terminal">
+            <div class="prompt">root@philosopher:<span class="command"> cat philosophy.txt</span></div>
+            <p>"In the world of cybersecurity, the best defense is understanding the offense."</p>
+          </div>
         </div>
       </div>
     </div>
@@ -262,24 +338,32 @@
     <div id="skills" class="section active">
       <div class="box">
         <h2>Technical Skills</h2>
-        <ul>
-          <li><strong>Web Exploitation:</strong> SQLi, XSS, SSTI, IDOR, CSRF, SSRF</li>
-          <li><strong>Network Attacks:</strong> MITM, SNMP, SMB, RDP exploits, DNS spoofing</li>
-          <li><strong>Active Directory:</strong> Kerberoasting, AS-REP Roasting, Golden Ticket, ACL abuse</li>
-          <li><strong>Post-Exploitation:</strong> Privilege escalation, lateral movement, persistence</li>
-          <li><strong>Tools:</strong> Metasploit, Burp Suite, Nmap, Wireshark, Cobalt Strike, BloodHound</li>
-          <li><strong>Programming:</strong> Python, Bash, PowerShell (for offensive tooling)</li>
-        </ul>
+        
+        <div class="terminal">
+          <div class="prompt">root@philosopher:<span class="command"> skills --list</span></div>
+          <ul>
+            <li><strong>Web Exploitation:</strong> SQLi, XSS, SSTI, IDOR, CSRF, SSRF</li>
+            <li><strong>Network Attacks:</strong> MITM, SNMP, SMB, RDP exploits, DNS spoofing</li>
+            <li><strong>Active Directory:</strong> Kerberoasting, AS-REP Roasting, Golden Ticket, ACL abuse</li>
+            <li><strong>Post-Exploitation:</strong> Privilege escalation, lateral movement, persistence</li>
+            <li><strong>Tools:</strong> Metasploit, Burp Suite, Nmap, Wireshark, Cobalt Strike, BloodHound</li>
+            <li><strong>Programming:</strong> Python, Bash, PowerShell (for offensive tooling)</li>
+          </ul>
+        </div>
       </div>
       
       <div class="box">
         <h2>Certifications & Achievements</h2>
-        <ul>
-          <li>Ranked in Top 5% on TryHackMe</li>
-          <li>eJPTv2 Certified</li>
-          <li>Completed 100+ HackTheBox/TryHackMe machines</li>
-          <li>Participated in 20+ CTF competitions</li>
-        </ul>
+        
+        <div class="terminal">
+          <div class="prompt">root@philosopher:<span class="command"> achievements --show</span></div>
+          <ul>
+            <li>Ranked in Top 5% on TryHackMe</li>
+            <li>eJPTv2 Certified</li>
+            <li>Completed 100+ HackTheBox/TryHackMe machines</li>
+            <li>Participated in 20+ CTF competitions</li>
+          </ul>
+        </div>
       </div>
     </div>
     
@@ -287,29 +371,27 @@
     <div id="writeups" class="section">
       <div class="box">
         <h2>Security Writeups</h2>
-        <p>Detailed technical writeups of my hacking challenges and solutions:</p>
         
-        <div class="writeup">
-          <h3>Active Directory Compromise: From Zero to Domain Admin</h3>
-          <p>A step-by-step guide on exploiting common AD misconfigurations to gain complete domain control.</p>
-          <a href="#">Read More →</a>
-        </div>
-        
-        <div class="writeup">
-          <h3>Bypassing Modern WAFs for SQL Injection</h3>
-          <p>Creative techniques to evade web application firewalls and exploit SQL injection vulnerabilities.</p>
-          <a href="#">Read More →</a>
-        </div>
-        
-        <div class="writeup">
-          <h3>Privilege Escalation in Linux: Uncommon Paths</h3>
-          <p>Exploring less-known methods for escalating privileges on Linux systems.</p>
-          <a href="#">Read More →</a>
-        </div>
-        
-        <div class="gif-container">
-          <div class="gif-placeholder">[CTF GIF Here]</div>
-          <div class="gif-placeholder">[Hacking GIF Here]</div>
+        <div class="terminal">
+          <div class="prompt">root@philosopher:<span class="command"> ls writeups/</span></div>
+          
+          <div class="writeup">
+            <h3>Active Directory Compromise: From Zero to Domain Admin</h3>
+            <p>A step-by-step guide on exploiting common AD misconfigurations to gain complete domain control.</p>
+            <a href="#">Read More →</a>
+          </div>
+          
+          <div class="writeup">
+            <h3>Bypassing Modern WAFs for SQL Injection</h3>
+            <p>Creative techniques to evade web application firewalls and exploit SQL injection vulnerabilities.</p>
+            <a href="#">Read More →</a>
+          </div>
+          
+          <div class="writeup">
+            <h3>Privilege Escalation in Linux: Uncommon Paths</h3>
+            <p>Exploring less-known methods for escalating privileges on Linux systems.</p>
+            <a href="#">Read More →</a>
+          </div>
         </div>
       </div>
     </div>
@@ -318,17 +400,21 @@
     <div id="links" class="section">
       <div class="box">
         <h2>Connect With Me</h2>
-        <ul>
-          <li><a href="https://github.com/Philosopher-Man" target="_blank">GitHub</a> - My offensive security tools and projects</li>
-          <li><a href="https://tryhackme.com/r/p/PhilosopherMan08" target="_blank">TryHackMe</a> - My hacking learning profile</li>
-          <li><a href="https://www.linkedin.com/in/oscarescalantecam/" target="_blank">LinkedIn</a> - Professional network</li>
-          <li><a href="https://app.hackthebox.com/profile/" target="_blank">HackTheBox</a> - My HTB profile</li>
-        </ul>
+        
+        <div class="terminal">
+          <div class="prompt">root@philosopher:<span class="command"> connect --social</span></div>
+          <ul>
+            <li><a href="https://github.com/Philosopher-Man" target="_blank">GitHub</a> - My offensive security tools and projects</li>
+            <li><a href="https://tryhackme.com/r/p/PhilosopherMan08" target="_blank">TryHackMe</a> - My hacking learning profile</li>
+            <li><a href="https://www.linkedin.com/in/oscarescalantecam/" target="_blank">LinkedIn</a> - Professional network</li>
+          </ul>
+        </div>
       </div>
     </div>
     
     <footer>
-      © 2025 Oscar Escalante | Offensive Security Specialist
+      <p class="hack-text">Hack the world! :)</p>
+      <p>© 2025 Oscar Escalante | Offensive Security Specialist</p>
     </footer>
   </div>
 
@@ -336,6 +422,8 @@
     // Show the default section on load
     document.addEventListener('DOMContentLoaded', function() {
       showSection('skills');
+      typeTerminalText();
+      startMatrixEffect();
     });
 
     function showSection(sectionId) {
@@ -346,6 +434,87 @@
       
       // Show the selected section
       document.getElementById(sectionId).classList.add('active');
+      
+      // Special handling for about section
+      if (sectionId === 'about') {
+        document.getElementById('about-content').style.display = 'block';
+      }
+    }
+
+    function typeTerminalText() {
+      const terminal = document.getElementById('terminal-content');
+      const text = "oscar-escalante\n\nRole: Offensive Security Specialist\nSpecialty: Red Teaming & Pentesting\nLocation: Virtual\nStatus: Hacking all the things...";
+      let i = 0;
+      
+      function typeWriter() {
+        if (i < text.length) {
+          // Handle newlines
+          if (text.charAt(i) === '\n') {
+            terminal.innerHTML += '<br>';
+          } else {
+            terminal.innerHTML += text.charAt(i);
+          }
+          i++;
+          setTimeout(typeWriter, Math.random() * 50 + 30);
+        } else {
+          // After typing is done, show the rest of the content
+          document.getElementById('about-content').style.display = 'block';
+        }
+      }
+      
+      typeWriter();
+    }
+
+    function startMatrixEffect() {
+      const canvas = document.getElementById('matrix');
+      const ctx = canvas.getContext('2d');
+      
+      // Set canvas to full window
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+      
+      // Matrix characters
+      const matrixChars = "01アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン";
+      const fontSize = 14;
+      const columns = canvas.width / fontSize;
+      
+      // Create drops
+      const drops = [];
+      for (let i = 0; i < columns; i++) {
+        drops[i] = Math.random() * -100;
+      }
+      
+      function draw() {
+        // Black background with opacity
+        ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        
+        ctx.fillStyle = '#33ff33';
+        ctx.font = fontSize + 'px monospace';
+        
+        for (let i = 0; i < drops.length; i++) {
+          const text = matrixChars.charAt(Math.floor(Math.random() * matrixChars.length));
+          const x = i * fontSize;
+          const y = drops[i] * fontSize;
+          
+          ctx.fillText(text, x, y);
+          
+          // Reset drop to top when it reaches bottom
+          if (y > canvas.height && Math.random() > 0.975) {
+            drops[i] = 0;
+          }
+          
+          drops[i]++;
+        }
+      }
+      
+      setInterval(draw, 33);
+      
+      // Resize handler
+      window.addEventListener('resize', function() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+      });
     }
   </script>
 </body>
