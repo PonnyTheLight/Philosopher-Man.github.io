@@ -5,30 +5,190 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Oscar Escalante | Offensive Security</title>
   <style>
+    :root {
+      --neon-green: #00ff9f;
+      --neon-blue: #00ffea;
+      --neon-cyan: #00ffff;
+      --neon-purple: #bd00ff;
+      --dark-bg: #0a0a0a;
+    }
+    
     body {
-      background-color: black;
-      color: #00ff9f;
+      background-color: var(--dark-bg);
+      color: var(--neon-green);
       font-family: 'Courier New', monospace;
       margin: 0;
+      padding: 0;
+      overflow-x: hidden;
+      background-image: 
+        radial-gradient(circle at 10% 20%, rgba(0, 255, 154, 0.05) 0%, transparent 20%),
+        radial-gradient(circle at 90% 80%, rgba(0, 255, 234, 0.05) 0%, transparent 20%);
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
       padding: 2em;
-      animation: fadeIn 2s ease-in;
+      animation: fadeIn 1.5s ease-in;
     }
 
     h1 {
       font-size: 3em;
-      color: #00ffea;
+      color: var(--neon-blue);
+      text-shadow: 0 0 5px var(--neon-blue);
+      margin-bottom: 0.5em;
       animation: flicker 3s infinite alternate;
+      position: relative;
+    }
+
+    h1::after {
+      content: "_";
+      animation: blink 1s infinite;
+    }
+
+    h2 {
+      color: var(--neon-purple);
+      border-bottom: 1px dashed var(--neon-green);
+      padding-bottom: 0.3em;
+      text-shadow: 0 0 3px var(--neon-purple);
     }
 
     a {
-      color: #00ffff;
+      color: var(--neon-cyan);
       text-decoration: none;
+      transition: all 0.3s;
+      position: relative;
+    }
+
+    a:hover {
+      text-shadow: 0 0 5px var(--neon-cyan);
+    }
+
+    a::after {
+      content: "";
+      position: absolute;
+      width: 100%;
+      height: 1px;
+      bottom: 0;
+      left: 0;
+      background-color: var(--neon-cyan);
+      transform: scaleX(0);
+      transition: transform 0.3s;
+    }
+
+    a:hover::after {
+      transform: scaleX(1);
+    }
+
+    .nav {
+      display: flex;
+      gap: 1em;
+      margin-bottom: 2em;
+    }
+
+    .nav-btn {
+      background: transparent;
+      color: var(--neon-green);
+      border: 1px solid var(--neon-green);
+      padding: 0.5em 1em;
+      cursor: pointer;
+      font-family: 'Courier New', monospace;
+      transition: all 0.3s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .nav-btn:hover {
+      background: rgba(0, 255, 159, 0.1);
+      box-shadow: 0 0 10px var(--neon-green);
+    }
+
+    .nav-btn::before {
+      content: ">";
+      position: absolute;
+      left: -1em;
+      transition: all 0.3s;
+    }
+
+    .nav-btn:hover::before {
+      left: 0.5em;
+    }
+
+    .section {
+      display: none;
+      animation: fadeIn 0.5s ease-in;
+      margin-bottom: 2em;
+    }
+
+    .section.active {
+      display: block;
+    }
+
+    .box {
+      border: 1px dashed var(--neon-green);
+      padding: 1.5em;
+      margin: 1.5em 0;
+      position: relative;
+      transition: all 0.3s;
+    }
+
+    .box:hover {
+      box-shadow: 0 0 15px rgba(0, 255, 159, 0.2);
+    }
+
+    .box::before {
+      content: "#";
+      position: absolute;
+      top: -0.7em;
+      left: 1em;
+      background: var(--dark-bg);
+      padding: 0 0.5em;
+      color: var(--neon-green);
+    }
+
+    .gif-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1em;
+      margin: 1em 0;
+    }
+
+    .gif-placeholder {
+      width: 200px;
+      height: 150px;
+      border: 1px dashed var(--neon-purple);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--neon-purple);
+      transition: all 0.3s;
+    }
+
+    .gif-placeholder:hover {
+      background: rgba(189, 0, 255, 0.1);
+    }
+
+    footer {
+      margin-top: 3em;
+      text-align: center;
+      font-size: 0.9em;
+      color: var(--neon-green);
+      border-top: 1px dashed var(--neon-green);
+      padding-top: 1em;
     }
 
     @keyframes flicker {
-      0% { opacity: 1; }
-      50% { opacity: 0.5; }
-      100% { opacity: 1; }
+      0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% {
+        text-shadow: 0 0 5px var(--neon-blue);
+      }
+      20%, 24%, 55% {
+        text-shadow: 0 0 10px var(--neon-blue), 0 0 20px var(--neon-blue);
+      }
+    }
+
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0; }
     }
 
     @keyframes fadeIn {
@@ -36,36 +196,157 @@
       to { opacity: 1; }
     }
 
-    .box {
-      border: 1px dashed #00ff9f;
-      padding: 1em;
-      margin-top: 2em;
+    @keyframes scanline {
+      0% { transform: translateY(-100%); }
+      100% { transform: translateY(100%); }
+    }
+
+    .scanlines {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 9999;
+      background: linear-gradient(
+        to bottom,
+        transparent 0%,
+        rgba(0, 255, 159, 0.05) 50%,
+        transparent 100%
+      );
+      background-size: 100% 4px;
+      animation: scanline 8s linear infinite;
     }
   </style>
 </head>
 <body>
-  <h1>👾 Oscar Escalante</h1>
-  <p>Offensive Security Specialist | Red Teaming | Pentester</p>
-
-  <div class="box">
-    <h2>💻 Skills</h2>
-    <ul>
-      <li>Web Exploitation: SQLi, XSS, SSTI, IDOR</li>
-      <li>Network Attacks: MITM, SNMP, SMB</li>
-      <li>Active Directory: Kerberoasting, AS-REP Roasting</li>
-      <li>Tools: Metasploit, Burp Suite, Nmap, Wireshark</li>
-    </ul>
+  <div class="scanlines"></div>
+  
+  <div class="container">
+    <h1>Oscar Escalante</h1>
+    <p style="color: var(--neon-cyan); font-size: 1.2em;">Offensive Security Specialist | Red Team Operator | Ethical Hacker</p>
+    
+    <div class="nav">
+      <button class="nav-btn" onclick="showSection('about')">About Me</button>
+      <button class="nav-btn" onclick="showSection('skills')">Skills</button>
+      <button class="nav-btn" onclick="showSection('writeups')">Writeups</button>
+      <button class="nav-btn" onclick="showSection('links')">Links</button>
+    </div>
+    
+    <!-- About Me Section -->
+    <div id="about" class="section">
+      <div class="box">
+        <h2>Who Am I?</h2>
+        <p>I'm Oscar Escalante, a passionate cybersecurity professional specializing in offensive security. My journey in hacking began with a deep curiosity about how systems can be broken, which evolved into a mission to help secure them.</p>
+        
+        <p>What excites me most:</p>
+        <ul>
+          <li>Red Team operations and adversary simulation</li>
+          <li>Finding creative ways to bypass security controls</li>
+          <li>Web application penetration testing</li>
+          <li>Active Directory exploitation techniques</li>
+          <li>Developing custom tools for security assessments</li>
+        </ul>
+        
+        <p>I believe in the hacker mindset - constantly questioning, exploring, and pushing boundaries to uncover vulnerabilities before malicious actors do.</p>
+        
+        <div class="gif-container">
+          <div class="gif-placeholder">[Your GIF Here]</div>
+          <div class="gif-placeholder">[Your GIF Here]</div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Skills Section -->
+    <div id="skills" class="section active">
+      <div class="box">
+        <h2>Technical Skills</h2>
+        <ul>
+          <li><strong>Web Exploitation:</strong> SQLi, XSS, SSTI, IDOR, CSRF, SSRF</li>
+          <li><strong>Network Attacks:</strong> MITM, SNMP, SMB, RDP exploits, DNS spoofing</li>
+          <li><strong>Active Directory:</strong> Kerberoasting, AS-REP Roasting, Golden Ticket, ACL abuse</li>
+          <li><strong>Post-Exploitation:</strong> Privilege escalation, lateral movement, persistence</li>
+          <li><strong>Tools:</strong> Metasploit, Burp Suite, Nmap, Wireshark, Cobalt Strike, BloodHound</li>
+          <li><strong>Programming:</strong> Python, Bash, PowerShell (for offensive tooling)</li>
+        </ul>
+      </div>
+      
+      <div class="box">
+        <h2>Certifications & Achievements</h2>
+        <ul>
+          <li>Ranked in Top 5% on TryHackMe</li>
+          <li>eJPTv2 Certified</li>
+          <li>Completed 100+ HackTheBox/TryHackMe machines</li>
+          <li>Participated in 20+ CTF competitions</li>
+        </ul>
+      </div>
+    </div>
+    
+    <!-- Writeups Section -->
+    <div id="writeups" class="section">
+      <div class="box">
+        <h2>Security Writeups</h2>
+        <p>Detailed technical writeups of my hacking challenges and solutions:</p>
+        
+        <div class="writeup">
+          <h3>Active Directory Compromise: From Zero to Domain Admin</h3>
+          <p>A step-by-step guide on exploiting common AD misconfigurations to gain complete domain control.</p>
+          <a href="#">Read More →</a>
+        </div>
+        
+        <div class="writeup">
+          <h3>Bypassing Modern WAFs for SQL Injection</h3>
+          <p>Creative techniques to evade web application firewalls and exploit SQL injection vulnerabilities.</p>
+          <a href="#">Read More →</a>
+        </div>
+        
+        <div class="writeup">
+          <h3>Privilege Escalation in Linux: Uncommon Paths</h3>
+          <p>Exploring less-known methods for escalating privileges on Linux systems.</p>
+          <a href="#">Read More →</a>
+        </div>
+        
+        <div class="gif-container">
+          <div class="gif-placeholder">[CTF GIF Here]</div>
+          <div class="gif-placeholder">[Hacking GIF Here]</div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Links Section -->
+    <div id="links" class="section">
+      <div class="box">
+        <h2>Connect With Me</h2>
+        <ul>
+          <li><a href="https://github.com/Philosopher-Man" target="_blank">GitHub</a> - My offensive security tools and projects</li>
+          <li><a href="https://tryhackme.com/r/p/PhilosopherMan08" target="_blank">TryHackMe</a> - My hacking learning profile</li>
+          <li><a href="https://www.linkedin.com/in/oscarescalantecam/" target="_blank">LinkedIn</a> - Professional network</li>
+          <li><a href="https://app.hackthebox.com/profile/" target="_blank">HackTheBox</a> - My HTB profile</li>
+        </ul>
+      </div>
+    </div>
+    
+    <footer>
+      © 2025 Oscar Escalante | Offensive Security Specialist
+    </footer>
   </div>
 
-  <div class="box">
-    <h2>📎 Links</h2>
-    <ul>
-      <li><a href="https://github.com/Philosopher-Man" target="_blank">GitHub</a></li>
-      <li><a href="https://tryhackme.com/r/p/PhilosopherMan08" target="_blank">TryHackMe</a></li>
-      <li><a href="https://www.linkedin.com/in/oscarescalantecam/" target="_blank">LinkedIn</a></li>
-    </ul>
-  </div>
+  <script>
+    // Show the default section on load
+    document.addEventListener('DOMContentLoaded', function() {
+      showSection('skills');
+    });
 
-  <p style="margin-top: 3em; font-size: 0.9em;">© 2025 Oscar Escalante</p>
+    function showSection(sectionId) {
+      // Hide all sections
+      document.querySelectorAll('.section').forEach(section => {
+        section.classList.remove('active');
+      });
+      
+      // Show the selected section
+      document.getElementById(sectionId).classList.add('active');
+    }
+  </script>
 </body>
 </html>
