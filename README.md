@@ -1,1 +1,0 @@
-# Philosopher-Man.github.io
