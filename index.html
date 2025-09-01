@@ -1,627 +1,72 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Oscar Escalante | Offensive Security</title>
-  <style>
-    :root {
-      --neon-green: #00ff9f;
-      --neon-blue: #00ffea;
-      --neon-cyan: #00ffff;
-      --neon-purple: #bd00ff;
-      --dark-bg: #0a0a0a;
-      --terminal-green: #33ff33;
-    }
-    
-    body {
-      background-color: var(--dark-bg);
-      color: var(--terminal-green);
-      font-family: 'Courier New', monospace;
-      margin: 0;
-      padding: 0;
-      overflow-x: hidden;
-      line-height: 1.5;
-      background-image: 
-        radial-gradient(circle at 10% 20%, rgba(0, 255, 154, 0.03) 0%, transparent 20%),
-        radial-gradient(circle at 90% 80%, rgba(0, 255, 234, 0.03) 0%, transparent 20%);
-    }
-
-    .container {
-      max-width: 900px;
-      margin: 0 auto;
-      padding: 2em;
-      animation: fadeIn 1.5s ease-in;
-    }
-
-    h1 {
-      font-size: 3em;
-      color: var(--neon-blue);
-      text-shadow: 0 0 5px var(--neon-blue);
-      margin-bottom: 0.5em;
-      animation: flicker 3s infinite alternate;
-      position: relative;
-    }
-
-    h1::after {
-      content: "_";
-      animation: blink 1s infinite;
-    }
-
-    h2 {
-      color: var(--neon-purple);
-      border-bottom: 1px dashed var(--neon-green);
-      padding-bottom: 0.3em;
-      text-shadow: 0 0 3px var(--neon-purple);
-      margin-top: 1.5em;
-    }
-
-    h3 {
-      color: var(--neon-cyan);
-      margin-top: 1em;
-    }
-
-    a {
-      color: var(--terminal-green);
-      text-decoration: none;
-      transition: all 0.3s;
-      position: relative;
-    }
-
-    a:hover {
-      text-shadow: 0 0 5px var(--terminal-green);
-    }
-
-    a::after {
-      content: "";
-      position: absolute;
-      width: 100%;
-      height: 1px;
-      bottom: 0;
-      left: 0;
-      background-color: var(--terminal-green);
-      transform: scaleX(0);
-      transition: transform 0.3s;
-    }
-
-    a:hover::after {
-      transform: scaleX(1);
-    }
-
-    .nav {
-      display: flex;
-      gap: 1em;
-      margin-bottom: 2em;
-      flex-wrap: wrap;
-    }
-
-    .nav-btn {
-      background: transparent;
-      color: var(--terminal-green);
-      border: 1px solid var(--terminal-green);
-      padding: 0.5em 1em;
-      cursor: pointer;
-      font-family: 'Courier New', monospace;
-      transition: all 0.3s;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .nav-btn:hover {
-      background: rgba(51, 255, 51, 0.1);
-      box-shadow: 0 0 10px var(--terminal-green);
-    }
-
-    .nav-btn::before {
-      content: ">";
-      position: absolute;
-      left: -1em;
-      transition: all 0.3s;
-    }
-
-    .nav-btn:hover::before {
-      left: 0.5em;
-    }
-
-    .section {
-      display: none;
-      animation: fadeIn 0.5s ease-in;
-      margin-bottom: 2em;
-    }
-
-    .section.active {
-      display: block;
-    }
-
-    .box {
-      border: 1px dashed var(--terminal-green);
-      padding: 1.5em;
-      margin: 1.5em 0;
-      position: relative;
-      transition: all 0.3s;
-    }
-
-    .box:hover {
-      box-shadow: 0 0 15px rgba(51, 255, 51, 0.2);
-    }
-
-    .box::before {
-      content: "#";
-      position: absolute;
-      top: -0.7em;
-      left: 1em;
-      background: var(--dark-bg);
-      padding: 0 0.5em;
-      color: var(--terminal-green);
-    }
-
-    .terminal {
-      background-color: rgba(0, 0, 0, 0.7);
-      border: 1px solid var(--terminal-green);
-      padding: 2em 1em 1em 1em;
-      margin: 1.5em 0;
-      font-family: 'Courier New', monospace;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .terminal::before {
-      content: "";
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 1.5em;
-      background: linear-gradient(to right, #333, #222);
-      border-bottom: 1px solid #111;
-    }
-
-    .terminal::after {
-      content: "terminal";
-      position: absolute;
-      top: 0.3em;
-      left: 1em;
-      color: #ccc;
-      font-size: 0.8em;
-    }
-
-    .prompt {
-      color: var(--terminal-green);
-    }
-
-    .command {
-      color: white;
-    }
-
-    .cursor {
-      display: inline-block;
-      width: 10px;
-      height: 1em;
-      background-color: var(--terminal-green);
-      animation: blink 1s infinite;
-      vertical-align: middle;
-    }
-
-    .typewriter {
-      overflow: hidden;
-      border-right: 0.15em solid var(--terminal-green);
-      white-space: nowrap;
-      margin: 0 auto;
-      letter-spacing: 0.15em;
-      animation: typing 3.5s steps(40, end), blink-caret 0.75s step-end infinite;
-    }
-
-    footer {
-      margin-top: 3em;
-      text-align: center;
-      font-size: 0.9em;
-      color: var(--terminal-green);
-      border-top: 1px dashed var(--terminal-green);
-      padding-top: 1em;
-    }
-
-    .hack-text {
-      font-family: 'Courier New', monospace;
-      color: var(--terminal-green);
-      text-shadow: 0 0 5px var(--terminal-green);
-      margin-bottom: 0.5em;
-    }
-
-    .cert-item, .achievement-item {
-      margin-bottom: 1em;
-      padding-left: 1em;
-      border-left: 2px solid var(--neon-green);
-    }
-
-    .cert-id {
-      font-size: 0.8em;
-      color: var(--neon-cyan);
-      display: block;
-      margin-top: 0.3em;
-    }
-
-    @keyframes flicker {
-      0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% {
-        text-shadow: 0 0 5px var(--neon-blue);
-      }
-      20%, 24%, 55% {
-        text-shadow: 0 0 10px var(--neon-blue), 0 0 20px var(--neon-blue);
-      }
-    }
-
-    @keyframes blink {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0; }
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
-    }
-
-    @keyframes scanline {
-      0% { transform: translateY(-100%); }
-      100% { transform: translateY(100%); }
-    }
-
-    @keyframes typing {
-      from { width: 0 }
-      to { width: 100% }
-    }
-
-    @keyframes blink-caret {
-      from, to { border-color: transparent }
-      50% { border-color: var(--terminal-green); }
-    }
-
-    .scanlines {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      pointer-events: none;
-      z-index: 9999;
-      background: linear-gradient(
-        to bottom,
-        transparent 0%,
-        rgba(0, 255, 159, 0.03) 50%,
-        transparent 100%
-      );
-      background-size: 100% 4px;
-      animation: scanline 8s linear infinite;
-    }
-
-    .matrix-effect {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      z-index: -1;
-      opacity: 0.1;
-      pointer-events: none;
-    }
-
-    .highlight {
-      animation: highlight-pulse 2s infinite alternate;
-    }
-
-    @keyframes highlight-pulse {
-      from { opacity: 0.7; }
-      to { opacity: 1; text-shadow: 0 0 10px var(--terminal-green); }
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Philosopher Man</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <div class="scanlines"></div>
-  <canvas id="matrix" class="matrix-effect"></canvas>
-  
-  <div class="container">
-    <h1>Oscar Escalante</h1>
-    <p class="hack-text">Offensive Security Specialist | Red Team Operator | Ethical Hacker</p>
-    
-    <div class="nav">
-      <button class="nav-btn" onclick="showSection('about')">About Me</button>
-      <button class="nav-btn" onclick="showSection('skills')">Skills</button>
-      <button class="nav-btn" onclick="showSection('certs')">Certifications</button>
-      <button class="nav-btn" onclick="showSection('achievements')">Achievements</button>
-      <button class="nav-btn" onclick="showSection('writeups')">Writeups</button>
-      <button class="nav-btn" onclick="showSection('links')">Links</button>
-    </div>
-    
-    <!-- About Me Section -->
-    <div id="about" class="section">
-      <div class="box">
-        <h2>whoami</h2>
-        
-        <div class="terminal">
-          <div id="terminal-content"></div>
-          <div class="prompt">root@philosopher:<span class="command"> whoami</span><span class="cursor"></span></div>
-        </div>
-        
-        <div id="about-content" style="display: none;">
-          <p>I'm Oscar Escalante, a passionate cybersecurity professional specializing in offensive security. My journey in hacking began with a deep curiosity about how systems can be broken, which evolved into a mission to help secure them.</p>
-          
-          <p>What excites me most:</p>
-          <ul>
-            <li>Red Team operations and adversary simulation</li>
-            <li>Finding creative ways to bypass security controls</li>
-            <li>Web application penetration testing</li>
-            <li>Active Directory exploitation techniques</li>
-            <li>Developing custom tools for security assessments</li>
-          </ul>
-          
-          <div class="terminal">
-            <div class="prompt">root@philosopher:<span class="command"> cat philosophy.txt</span></div>
-            <p>"In the world of cybersecurity, the best defense is understanding the offense."</p>
-          </div>
-        </div>
-      </div>
-    </div>
-    
-    <!-- Skills Section -->
-    <div id="skills" class="section active">
-      <div class="box">
-        <h2>Technical Skills</h2>
-        
-        <div class="terminal">
-          <div class="prompt">root@philosopher:<span class="command"> skills --list</span></div>
-          <ul>
-            <li><strong>Web Exploitation:</strong> SQLi, XSS, SSTI, IDOR, CSRF, SSRF</li>
-            <li><strong>Network Attacks:</strong> MITM, SNMP, SMB, RDP exploits, DNS spoofing</li>
-            <li><strong>Active Directory:</strong> Kerberoasting, AS-REP Roasting, Golden Ticket, ACL abuse</li>
-            <li><strong>Post-Exploitation:</strong> Privilege escalation, lateral movement, persistence</li>
-            <li><strong>Tools:</strong> Metasploit, Burp Suite, Nmap, Wireshark, Cobalt Strike, BloodHound</li>
-            <li><strong>Programming:</strong> Python, Bash, PowerShell (for offensive tooling)</li>
-          </ul>
-        </div>
-      </div>
-    </div>
-    
-    <!-- Certifications Section -->
-    <div id="certs" class="section">
-      <div class="box">
-        <h2>Certifications</h2>
-        
-        <div class="terminal">
-          <div class="prompt">root@philosopher:<span class="command"> certs --list</span></div>
-          
-          <div class="cert-item highlight">
-            <strong>eJPTv2 (INE)</strong> - Junior Penetration Tester (in progress - exam expected Q4 2025)
-          </div>
-          
-          <div class="cert-item">
-            <strong>ICCA (INE)</strong> - INE Certified Cloud Associate (in preparation)
-          </div>
+    <!-- Header -->
+    <header>
+        <nav class="navbar">
+            <div class="logo">Philosopher Man</div>
+            <ul class="nav-links">
+                <li><a href="#about">About</a></li>
+                <li><a href="#projects">Projects</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
 
-          <div class="cert-item">
-            <strong>CISCO - Ethical Hacker</strong>
-            <span class="cert-id">Verify: <a href="https://www.credly.com/earner/earned/badge/b83888eb-16ef-40f6-8ffd-3c09240e31b8" target="_blank" style="color: #00ff9f; text-decoration: none;">Credly Badge</a></span>
-          </div>
-          
-          <div class="cert-item">
-            <strong>Hack4U - Linux Environment Customization</strong>
-            <span class="cert-id">Verify ID: 2834-6242-5500-3604</span>
-          </div>
-          
-          <div class="cert-item">
-            <strong>Hack4U - Linux and Bash</strong>
-            <span class="cert-id">Verify ID: 6110-3981-2104-2052</span>
-          </div>
-          
-          <div class="cert-item">
-            <strong>TryHackMe - Jr Penetration Tester.</strong>
-            <span class="cert-id">Verify: <a href="https://tryhackme-certificates.s3-eu-west-1.amazonaws.com/THM-IJ3DHUNH5M.pdf" target="_blank" style="color: #00ff9f; text-decoration: none;">TryHackMe Certificate</a></span>
-          </div>
-          
-          <div class="cert-item">
-            <strong>TryHackMe - Cyber Advent 2024 (SOC, AD, reverse shells, detection)</strong>
-            <span class="cert-id">Verify: <a href="https://tryhackme-certificates.s3-eu-west-1.amazonaws.com/THM-487WCWP38L.pdf" target="_blank" style="color: #00ff9f; text-decoration: none;">TryHackMe Certificate</a></span>
-          </div>
-          
-          <div class="cert-item">
-            <strong>Hack The Box - Senior Web Penetration Tester Path</strong> (in progress)
-          </div>
-          
-          <div class="cert-item">
-            <strong>Udemy - Pentesting in Information Security</strong>
-            <span class="cert-id">Verify: <a href="https://www.udemy.com/certificate/UC-e40c7171-613b-4cf5-9317-59efc7b2c9a9/" target="_blank" style="color: #00ff9f; text-decoration: none;">TryHackMe Certificate</a></span>
-          </div>
+    <!-- Hero Section -->
+    <section class="hero">
+        <h1>Welcome to My Portfolio</h1>
+        <p>Exploring technology, hacking, and creativity with passion.</p>
+        <button class="btn" onclick="scrollToSection('projects')">See My Work</button>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="section">
+        <h2>About Me</h2>
+        <p>
+            Hi! I'm Philosopher Man, passionate about ethical hacking, cybersecurity, and creative coding. 
+            I enjoy learning, building, and sharing knowledge with others. This page is my space to showcase 
+            personal projects and experiments.
+        </p>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="section">
+        <h2>Projects</h2>
+        <div class="projects-grid">
+            <div class="card">
+                <h3>Casino Roulette Simulator</h3>
+                <p>A roulette simulator testing strategies like Martingale and Inverse Labouchere.</p>
+            </div>
+            <div class="card">
+                <h3>Web Hacking Labs</h3>
+                <p>Practice environments for learning penetration testing and web vulnerabilities.</p>
+            </div>
+            <div class="card">
+                <h3>Linux Tools</h3>
+                <p>Scripts and customizations to optimize Linux environments for security testing.</p>
+            </div>
         </div>
-      </div>
-    </div>
-    
-    <!-- Achievements Section -->
-    <div id="achievements" class="section">
-      <div class="box">
-        <h2>Achievements</h2>
-        
-        <div class="terminal">
-          <div class="prompt">root@philosopher:<span class="command"> achievements --show-all</span></div>
-          
-          <div class="achievement-item highlight">
-            <strong>Top 5% Global on TryHackMe</strong>
-            <p>100+ rooms completed with strong focus on offensive security labs</p>
-          </div>
-          
-          <div class="achievement-item">
-            <strong>Completed 100+ labs in TryHackMe and Hack The Box</strong>
-            <p>Including advanced AD, privilege escalation, and firewall bypass scenarios</p>
-          </div>
-          
-          <div class="achievement-item">
-            <strong>Participated in 20+ CTF competitions</strong>
-            <p>Placing in the top 20% in most of them</p>
-          </div>
-          
-          <div class="achievement-item">
-            <strong>Built and published 8+ custom tools and scripts</strong>
-            <p>For automation and exploitation on GitHub</p>
-          </div>
-          
-          <div class="achievement-item">
-            <strong>Wrote 3 technical articles on ethical hacking</strong>
-            <p>About recon automation, with 500+ views</p>
-          </div>
-          
-          <div class="achievement-item">
-            <strong>Performed freelance pentesting for real clients</strong>
-            <p>Identified 15+ critical vulnerabilities and improved their posture by 20%</p>
-          </div>
-        </div>
-      </div>
-    </div>
-    
-    <!-- Writeups Section -->
-    <div id="writeups" class="section">
-      <div class="box">
-        <h2>Security Writeups</h2>
-        
-        <div class="terminal">
-          <div class="prompt">root@philosopher:<span class="command"> ls writeups/</span></div>
-          
-          <div class="writeup">
-            <h3>Active Directory Compromise: From Zero to Domain Admin</h3>
-            <p>A step-by-step guide on exploiting common AD misconfigurations to gain complete domain control.</p>
-            <a href="#">Read More →</a>
-          </div>
-          
-          <div class="writeup">
-            <h3>Bypassing Modern WAFs for SQL Injection</h3>
-            <p>Creative techniques to evade web application firewalls and exploit SQL injection vulnerabilities.</p>
-            <a href="#">Read More →</a>
-          </div>
-          
-          <div class="writeup">
-            <h3>Privilege Escalation in Linux: Uncommon Paths</h3>
-            <p>Exploring less-known methods for escalating privileges on Linux systems.</p>
-            <a href="#">Read More →</a>
-          </div>
-        </div>
-      </div>
-    </div>
-    
-    <!-- Links Section -->
-    <div id="links" class="section">
-      <div class="box">
-        <h2>Connect With Me</h2>
-        
-        <div class="terminal">
-          <div class="prompt">root@philosopher:<span class="command"> connect --social</span></div>
-          <ul>
-            <li><a href="https://github.com/Philosopher-Man" target="_blank">GitHub</a> - My offensive security tools and projects</li>
-            <li><a href="https://tryhackme.com/r/p/PhilosopherMan08" target="_blank">TryHackMe</a> - My hacking learning profile</li>
-            <li><a href="https://www.linkedin.com/in/oscarescalantecam/" target="_blank">LinkedIn</a> - Professional network</li>
-          </ul>
-        </div>
-      </div>
-    </div>
-    
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="section">
+        <h2>Contact</h2>
+        <p>If you’d like to collaborate or just say hi, feel free to reach out!</p>
+        <button class="btn" onclick="openEmail()">Send Email</button>
+    </section>
+
+    <!-- Footer -->
     <footer>
-      <p class="hack-text">Hack the world! :)</p>
-      <p>© 2025 Oscar Escalante | Offensive Security Specialist</p>
+        <p>&copy; 2025 Philosopher Man. All rights reserved.</p>
     </footer>
-  </div>
 
-  <script>
-    // Show the default section on load
-    document.addEventListener('DOMContentLoaded', function() {
-      showSection('skills');
-      typeTerminalText();
-      startMatrixEffect();
-    });
-
-    function showSection(sectionId) {
-      // Hide all sections
-      document.querySelectorAll('.section').forEach(section => {
-        section.classList.remove('active');
-      });
-      
-      // Show the selected section
-      document.getElementById(sectionId).classList.add('active');
-      
-      // Special handling for about section
-      if (sectionId === 'about') {
-        document.getElementById('about-content').style.display = 'block';
-      }
-    }
-
-    function typeTerminalText() {
-      const terminal = document.getElementById('terminal-content');
-      const text = "oscar-escalante\n\nRole: Offensive Security Specialist\nSpecialty: Red Teaming & Pentesting\nLocation: Unknown\nStatus: Hacking all the things...";
-      let i = 0;
-      
-      function typeWriter() {
-        if (i < text.length) {
-          // Handle newlines
-          if (text.charAt(i) === '\n') {
-            terminal.innerHTML += '<br>';
-          } else {
-            terminal.innerHTML += text.charAt(i);
-          }
-          i++;
-          setTimeout(typeWriter, Math.random() * 50 + 30);
-        } else {
-          // After typing is done, show the rest of the content
-          document.getElementById('about-content').style.display = 'block';
-        }
-      }
-      
-      typeWriter();
-    }
-
-    function startMatrixEffect() {
-      const canvas = document.getElementById('matrix');
-      const ctx = canvas.getContext('2d');
-      
-      // Set canvas to full window
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-      
-      // Matrix characters
-      const matrixChars = "01アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン";
-      const fontSize = 14;
-      const columns = canvas.width / fontSize;
-      
-      // Create drops
-      const drops = [];
-      for (let i = 0; i < columns; i++) {
-        drops[i] = Math.random() * -100;
-      }
-      
-      function draw() {
-        // Black background with opacity
-        ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
-        ctx.fillRect(0, 0, canvas.width, canvas.height);
-        
-        ctx.fillStyle = '#33ff33';
-        ctx.font = fontSize + 'px monospace';
-        
-        for (let i = 0; i < drops.length; i++) {
-          const text = matrixChars.charAt(Math.floor(Math.random() * matrixChars.length));
-          const x = i * fontSize;
-          const y = drops[i] * fontSize;
-          
-          ctx.fillText(text, x, y);
-          
-          // Reset drop to top when it reaches bottom
-          if (y > canvas.height && Math.random() > 0.975) {
-            drops[i] = 0;
-          }
-          
-          drops[i]++;
-        }
-      }
-      
-      setInterval(draw, 33);
-      
-      // Resize handler
-      window.addEventListener('resize', function() {
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-      });
-    }
-  </script>
+    <script src="script.js"></script>
 </body>
 </html>
