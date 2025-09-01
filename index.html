@@ -1,72 +1,105 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Philosopher Man</title>
-    <link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Oscar Escalante | Hacker Portfolio</title>
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <!-- Header -->
-    <header>
-        <nav class="navbar">
-            <div class="logo">Philosopher Man</div>
-            <ul class="nav-links">
-                <li><a href="#about">About</a></li>
-                <li><a href="#projects">Projects</a></li>
-                <li><a href="#contact">Contact</a></li>
-            </ul>
-        </nav>
-    </header>
+  <canvas id="matrix"></canvas>
 
-    <!-- Hero Section -->
-    <section class="hero">
-        <h1>Welcome to My Portfolio</h1>
-        <p>Exploring technology, hacking, and creativity with passion.</p>
-        <button class="btn" onclick="scrollToSection('projects')">See My Work</button>
+  <div class="container">
+    <h1 class="title">Oscar Escalante<span class="cursor">_</span></h1>
+    <p class="subtitle">Offensive Security Specialist | Red Team | Ethical Hacker</p>
+
+    <nav class="nav">
+      <button class="nav-btn" onclick="showSection('about')">whoami</button>
+      <button class="nav-btn" onclick="showSection('experience')">experience</button>
+      <button class="nav-btn" onclick="showSection('skills')">skills</button>
+      <button class="nav-btn" onclick="showSection('certs')">certifications</button>
+      <button class="nav-btn" onclick="showSection('projects')">projects</button>
+      <button class="nav-btn" onclick="showSection('contact')">connect</button>
+    </nav>
+
+    <!-- About -->
+    <section id="about" class="section active">
+      <div class="terminal">
+        <div class="prompt">root@philosopher:~# whoami</div>
+        <p>Offensive Security Specialist with hands-on experience in penetration testing, adversary simulation, and red team operations. Ranked top 5% globally on TryHackMe, with 100+ labs completed. Passionate about offensive tooling, web exploitation, and Active Directory attacks.</p>
+      </div>
     </section>
 
-    <!-- About Section -->
-    <section id="about" class="section">
-        <h2>About Me</h2>
-        <p>
-            Hi! I'm Philosopher Man, passionate about ethical hacking, cybersecurity, and creative coding. 
-            I enjoy learning, building, and sharing knowledge with others. This page is my space to showcase 
-            personal projects and experiments.
-        </p>
+    <!-- Experience -->
+    <section id="experience" class="section">
+      <div class="terminal">
+        <div class="prompt">root@philosopher:~# cat experience.log</div>
+        <ul>
+          <li>[2024-2025] Cybersecurity Analyst @ EA Piscinas Pro → Exploited BlueKeep, simulated phishing, reduced risk exposure by 40%.</li>
+          <li>[2023-Present] Offensive Security Researcher @ TryHackMe/HTB → 100+ labs, AD attacks, Kerberoasting, CTFs.</li>
+          <li>[2023-Present] Freelance Pentester → 15+ vulns identified, 20% posture improvement for clients.</li>
+        </ul>
+      </div>
     </section>
 
-    <!-- Projects Section -->
+    <!-- Skills -->
+    <section id="skills" class="section">
+      <div class="terminal">
+        <div class="prompt">root@philosopher:~# skills --list</div>
+        <ul>
+          <li>Web Exploitation: SQLi, XSS, SSTI, CSRF, SSRF, Cookie Manipulation</li>
+          <li>Network & AD: Kerberoasting, AS-REP, SMB/RDP exploits</li>
+          <li>Tools: Burp Suite, Metasploit, Nmap, Wireshark, Cobalt Strike, BloodHound</li>
+          <li>Programming: Python, Bash, PowerShell</li>
+          <li>Methodologies: MITRE ATT&CK, OWASP Top 10, PTES</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Certifications -->
+    <section id="certs" class="section">
+      <div class="terminal">
+        <div class="prompt">root@philosopher:~# cat certs.txt</div>
+        <ul>
+          <li>eJPTv2 (INE) → In progress</li>
+          <li>ICCA (INE) → In preparation</li>
+          <li>CISCO Ethical Hacker → <a href="https://www.credly.com/earner/earned/badge/b83888eb-16ef-40f6-8ffd-3c09240e31b8" target="_blank">Verify</a></li>
+          <li>Hack4U Linux & Bash → ID: 6110-3981-2104-2052</li>
+          <li>TryHackMe JPT → <a href="https://tryhackme-certificates.s3-eu-west-1.amazonaws.com/THM-IJ3DHUNH5M.pdf" target="_blank">Verify</a></li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Projects -->
     <section id="projects" class="section">
-        <h2>Projects</h2>
-        <div class="projects-grid">
-            <div class="card">
-                <h3>Casino Roulette Simulator</h3>
-                <p>A roulette simulator testing strategies like Martingale and Inverse Labouchere.</p>
-            </div>
-            <div class="card">
-                <h3>Web Hacking Labs</h3>
-                <p>Practice environments for learning penetration testing and web vulnerabilities.</p>
-            </div>
-            <div class="card">
-                <h3>Linux Tools</h3>
-                <p>Scripts and customizations to optimize Linux environments for security testing.</p>
-            </div>
-        </div>
+      <div class="terminal">
+        <div class="prompt">root@philosopher:~# ls projects/</div>
+        <ul>
+          <li><b>Roulette Simulator:</b> Python-based gambling strategy testing.</li>
+          <li><b>Web Hacking Labs:</b> CTF writeups & exploitation guides.</li>
+          <li><b>Linux Tools:</b> Custom scripts for automation & recon.</li>
+        </ul>
+      </div>
     </section>
 
-    <!-- Contact Section -->
+    <!-- Contact -->
     <section id="contact" class="section">
-        <h2>Contact</h2>
-        <p>If you’d like to collaborate or just say hi, feel free to reach out!</p>
-        <button class="btn" onclick="openEmail()">Send Email</button>
+      <div class="terminal">
+        <div class="prompt">root@philosopher:~# connect --social</div>
+        <ul>
+          <li>📧 Email: <a href="mailto:oscardavidescalante2019@gmail.com">oscardavidescalante2019@gmail.com</a></li>
+          <li>🐙 GitHub: <a href="https://github.com/Philosopher-Man" target="_blank">Philosopher-Man</a></li>
+          <li>🔗 LinkedIn: <a href="http://www.linkedin.com/in/oscarescalantecam" target="_blank">LinkedIn Profile</a></li>
+          <li>🛡️ TryHackMe: <a href="https://tryhackme.com/p/PhilosopherMan08" target="_blank">Profile</a></li>
+        </ul>
+      </div>
     </section>
 
-    <!-- Footer -->
     <footer>
-        <p>&copy; 2025 Philosopher Man. All rights reserved.</p>
+      <p>© 2025 Oscar Escalante | Hacker Portfolio</p>
     </footer>
+  </div>
 
-    <script src="script.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>
