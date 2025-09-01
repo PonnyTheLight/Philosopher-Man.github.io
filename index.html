@@ -1,101 +1,271 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Oscar Escalante | Hacker Portfolio</title>
-  <link rel="stylesheet" href="styles.css"/>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Oscar Escalante — Offensive Security Portfolio</title>
+  <meta name="description" content="Oscar Escalante | Offensive Security Specialist — portfolio, projects, certifications and reports." />
+  <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-  <canvas id="matrix"></canvas>
+  <!-- Matrix canvas + overlay -->
+  <canvas id="matrix" aria-hidden="true"></canvas>
+  <div id="overlay" aria-hidden="true"></div>
 
-  <div class="container">
-    <h1 class="title">Oscar Escalante<span class="cursor">_</span></h1>
-    <p class="subtitle">Offensive Security | Pentesting | Red Team</p>
-
-    <!-- Navigation -->
-    <nav class="nav">
-      <button class="nav-btn" onclick="showSection('about')">whoami</button>
-      <button class="nav-btn" onclick="showSection('skills')">skills</button>
-      <button class="nav-btn" onclick="showSection('experience')">experience</button>
-      <button class="nav-btn" onclick="showSection('projects')">projects</button>
-      <button class="nav-btn" onclick="showSection('certs')">certifications</button>
-      <button class="nav-btn" onclick="showSection('contact')">connect</button>
-    </nav>
-
-    <!-- Sections -->
-    <section id="about" class="section active">
-      <div class="terminal">
-        <div class="prompt">root@philosopher:~# whoami</div>
-        <p id="typing"></p>
+  <div class="wrap">
+    <header class="header">
+      <div class="brand">
+        <div class="brand-dot" aria-hidden="true"></div>
+        <div class="brand-text">Oscar Escalante</div>
       </div>
-    </section>
 
-    <section id="skills" class="section">
-      <div class="terminal">
-        <div class="prompt">root@philosopher:~# skills --list</div>
-        <ul>
-          <li>Web Exploitation → SQLi, XSS, SSTI, CSRF, SSRF</li>
-          <li>Network & AD → Kerberoasting, SMB/RDP exploits</li>
-          <li>Tools → Burp Suite, Metasploit, Nmap, BloodHound</li>
-          <li>Languages → Python, Bash, PowerShell</li>
-          <li>Methodologies → OWASP Top 10, MITRE ATT&CK, PTES</li>
-        </ul>
+      <nav class="nav" role="navigation" aria-label="Main">
+        <button class="nav-btn" data-target="about">whoami</button>
+        <button class="nav-btn" data-target="skills">skills</button>
+        <button class="nav-btn" data-target="experience">experience</button>
+        <button class="nav-btn" data-target="projects">projects</button>
+        <button class="nav-btn" data-target="certs">certifications</button>
+        <button class="nav-btn" data-target="reports">reports</button>
+        <button class="nav-btn" data-target="contact">connect</button>
+      </nav>
+    </header>
+
+    <main class="main">
+      <!-- Hero + short intro -->
+      <section class="hero panel" data-id="about">
+        <div class="panel-inner">
+          <h1 class="hero-title">Offensive Security • Red Team • Research</h1>
+          <p class="hero-sub">I break systems to learn how to secure them — active in web exploitation, Active Directory attacks, and adversary simulation. Top 5% global on TryHackMe with 100+ labs.</p>
+
+          <div class="hero-actions">
+            <button class="cta" data-target="projects">See projects</button>
+            <a class="ghost" href="#contact">Contact</a>
+          </div>
+
+          <div class="terminal-card">
+            <div class="prompt">root@philosopher:~# whoami</div>
+            <pre class="terminal-text" id="about-typing" aria-live="polite"></pre>
+          </div>
+        </div>
+      </section>
+
+      <!-- Skills — richer, interactive -->
+      <section class="panel" data-id="skills" aria-hidden="true">
+        <div class="panel-inner">
+          <h2 class="panel-title">Skills</h2>
+          <p class="muted">Command-style listing. Hover a skill for short notes.</p>
+
+          <div class="skills-grid">
+            <div class="skill" tabindex="0" data-note="SQL injection, blind & time-based, prepared statements research">Web Exploitation</div>
+            <div class="skill" tabindex="0" data-note="XSS, SSTI, template injection, cookie manipulation">Client-side & Server-side attacks</div>
+            <div class="skill" tabindex="0" data-note="Kerberoasting, AS-REP roasting, Golden Ticket, ACL & GPO abuse">Active Directory</div>
+            <div class="skill" tabindex="0" data-note="SMB, RDP, BlueKeep, network pivoting techniques">Network Exploits</div>
+            <div class="skill" tabindex="0" data-note="Post-exploitation automation and persistence">Post-Exploitation</div>
+            <div class="skill" tabindex="0" data-note="Burp Suite, Nmap, Wireshark, Cobalt Strike (familiar)">Tools & Frameworks</div>
+            <div class="skill" tabindex="0" data-note="Python, Bash, PowerShell for offensive tooling">Scripting & Automation</div>
+            <div class="skill" tabindex="0" data-note="MITRE ATT&CK, OWASP Top 10, PTES">Methodologies</div>
+            <div class="skill" tabindex="0" data-note="Recon, OSINT, log analysis, ELK/Splunk basics">Detection & Intelligence</div>
+            <div class="skill" tabindex="0" data-note="Testing approaches, fuzzing & wordlist generation">Fuzzing & Recon</div>
+          </div>
+
+          <div class="skill-note" id="skill-note" aria-hidden="true"></div>
+        </div>
+      </section>
+
+      <!-- Experience — longer, improved wording -->
+      <section class="panel" data-id="experience" aria-hidden="true">
+        <div class="panel-inner">
+          <h2 class="panel-title">Experience</h2>
+
+          <div class="timeline">
+            <article class="event">
+              <div class="event-year">Feb 2024 — Feb 2025</div>
+              <div class="event-body">
+                <h3>Cybersecurity Analyst — EA PISCINAS PRO</h3>
+                <p class="muted">Led hands-on internal assessments and purple-team exercises to reduce enterprise risk.</p>
+                <ul>
+                  <li>Found exposed RDP surfaces and chained a BlueKeep exploit to achieve domain-level access in a lab scenario.</li>
+                  <li>Designed and executed internal phishing campaigns with realistic payloads to measure human risk.</li>
+                  <li>Collaborated with SOC using Wireshark and Nmap telemetry to improve detection, reducing high-risk exposure by ~40%.</li>
+                </ul>
+              </div>
+            </article>
+
+            <article class="event">
+              <div class="event-year">2023 — Present</div>
+              <div class="event-body">
+                <h3>Offensive Researcher / Junior Pentester — TryHackMe & HTB</h3>
+                <p class="muted">Focused labs, CTFs and published automation tools.</p>
+                <ul>
+                  <li>Ranked in top 5% globally on TryHackMe; 100+ labs completed across web, network and AD tracks.</li>
+                  <li>Performed Kerberos attacks (Kerberoasting, AS-REP), SMB audits, and various priv-esc chains.</li>
+                  <li>Authored Python and Bash scripts for recon automation, fuzzing, and custom wordlists.</li>
+                </ul>
+              </div>
+            </article>
+
+            <article class="event">
+              <div class="event-year">Jun 2023 — Present</div>
+              <div class="event-body">
+                <h3>Freelance Security Researcher & Pentester</h3>
+                <p class="muted">Small-business engagements and technical reports.</p>
+                <ul>
+                  <li>Delivered vulnerability assessments identifying 15+ risks in web & network infra; guided mitigation roadmap.</li>
+                  <li>Provided detailed remediation reports and prioritized fixes mapped to MITRE and OWASP controls.</li>
+                </ul>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- Projects — expanded, attention-grabbing -->
+      <section class="panel" data-id="projects" aria-hidden="true">
+        <div class="panel-inner">
+          <h2 class="panel-title">Projects</h2>
+          <p class="muted">Small-to-medium projects showcasing research, automation and writeups.</p>
+
+          <div class="projects-grid">
+            <article class="project-card">
+              <h3>Roulette Strategy Lab</h3>
+              <p class="muted">Python simulator to test Martingale, Reverse Martingale and Inverse Labouchère. Includes statistical reports and Monte Carlo runs.</p>
+              <div class="meta">Tech: Python • NumPy • Matplotlib • GitHub</div>
+              <a class="link" href="https://github.com/Philosopher-Man" target="_blank" rel="noopener">View on GitHub →</a>
+            </article>
+
+            <article class="project-card">
+              <h3>AD Discovery Toolkit</h3>
+              <p class="muted">Collection of scripts to enumerate AD misconfigurations, ACL exports and Kerberos principal scanning for lab environments.</p>
+              <div class="meta">Tech: PowerShell • Python • BloodHound exports</div>
+              <a class="link" href="https://github.com/Philosopher-Man" target="_blank" rel="noopener">View on GitHub →</a>
+            </article>
+
+            <article class="project-card">
+              <h3>WAF Bypass Patterns</h3>
+              <p class="muted">Small research repo with payload transformations that bypass example WAF signatures (for lab / educational use only).</p>
+              <div class="meta">Tech: Burp extensions • HTTP tampering</div>
+              <a class="link" href="https://github.com/Philosopher-Man" target="_blank" rel="noopener">Writeups →</a>
+            </article>
+
+            <article class="project-card">
+              <h3>Recon Dashboard</h3>
+              <p class="muted">Simple dashboard summarizing automated recon results (hosts, open ports, basic vuln indicators).</p>
+              <div class="meta">Tech: Python • Flask • Docker</div>
+              <a class="link" href="https://github.com/Philosopher-Man" target="_blank" rel="noopener">Demo →</a>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- Certifications -->
+      <section class="panel" data-id="certs" aria-hidden="true">
+        <div class="panel-inner">
+          <h2 class="panel-title">Certifications & Courses</h2>
+          <p class="muted">Formal training & verifiable badges.</p>
+
+          <div class="cert-grid">
+            <div class="cert">
+              <strong>eJPTv2 (INE)</strong>
+              <div class="cert-note">Junior Penetration Tester — in progress (expected Q4 2025)</div>
+            </div>
+
+            <div class="cert">
+              <strong>ICCA (INE)</strong>
+              <div class="cert-note">INE Certified Cloud Associate — preparing</div>
+            </div>
+
+            <div class="cert">
+              <strong>CISCO — Ethical Hacker</strong>
+              <div class="cert-note"><a href="https://www.credly.com/earner/earned/badge/b83888eb-16ef-40f6-8ffd-3c09240e31b8" target="_blank" rel="noopener">Verify on Credly</a></div>
+            </div>
+
+            <div class="cert">
+              <strong>Hack4U — Linux Environment Customization</strong>
+              <div class="cert-note">Verify ID: 2834-6242-5500-3604</div>
+            </div>
+
+            <div class="cert">
+              <strong>Hack4U — Linux and Bash</strong>
+              <div class="cert-note">Verify ID: 6110-3981-2104-2052</div>
+            </div>
+
+            <div class="cert">
+              <strong>TryHackMe — Junior Penetration Tester</strong>
+              <div class="cert-note"><a href="https://tryhackme-certificates.s3-eu-west-1.amazonaws.com/THM-IJ3DHUNH5M.pdf" target="_blank" rel="noopener">Certificate</a></div>
+            </div>
+
+            <div class="cert">
+              <strong>TryHackMe — Cyber Advent 2024</strong>
+              <div class="cert-note"><a href="https://tryhackme-certificates.s3-eu-west-1.amazonaws.com/THM-487WCWP38L.pdf" target="_blank" rel="noopener">Certificate</a></div>
+            </div>
+
+            <div class="cert">
+              <strong>Hack The Box — Senior Web Pentester Path</strong>
+              <div class="cert-note">Pathwork in progress</div>
+            </div>
+
+            <div class="cert">
+              <strong>Udemy — Pentesting in Information Security</strong>
+              <div class="cert-note"><a href="https://www.udemy.com/certificate/UC-e40c7171-613b-4cf5-9317-59efc7b2c9a9/" target="_blank" rel="noopener">Verify</a></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Reports (where your detailed writeups will live) -->
+      <section class="panel" data-id="reports" aria-hidden="true">
+        <div class="panel-inner">
+          <h2 class="panel-title">Reports & Writeups</h2>
+          <p class="muted">Professional reports, machine walkthroughs and public writeups — this area will grow as new reports are published.</p>
+
+          <div class="reports-grid">
+            <article class="report-card">
+              <h3>AD Compromise Walkthrough — coming</h3>
+              <p class="muted">Planned: step-by-step lab walkthrough from initial recon to Domain Admin with mitigations.</p>
+            </article>
+
+            <article class="report-card">
+              <h3>WAF Evasion Techniques — coming</h3>
+              <p class="muted">Planned: reproducible examples demonstrating payload obfuscation and defense suggestions.</p>
+            </article>
+
+            <article class="report-card">
+              <h3>Roulette Simulator Analysis — available</h3>
+              <p class="muted">Detailed statistical results, Monte Carlo simulations and risk analysis.</p>
+              <a class="link" href="https://github.com/Philosopher-Man" target="_blank" rel="noopener">View repo</a>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- Contact -->
+      <section class="panel" data-id="contact" aria-hidden="true">
+        <div class="panel-inner">
+          <h2 class="panel-title">Connect</h2>
+          <p class="muted">Get in touch for collaborations, research or freelance engagements.</p>
+          <ul class="contact-list">
+            <li>📧 <a href="mailto:oscardavidescalante2019@gmail.com">oscardavidescalante2019@gmail.com</a></li>
+            <li>🐙 <a href="https://github.com/Philosopher-Man" target="_blank" rel="noopener">GitHub</a></li>
+            <li>🔗 <a href="http://www.linkedin.com/in/oscarescalantecam" target="_blank" rel="noopener">LinkedIn</a></li>
+            <li>🛡️ <a href="https://tryhackme.com/p/PhilosopherMan08" target="_blank" rel="noopener">TryHackMe</a></li>
+          </ul>
+
+          <div class="terminal-small">
+            <div class="prompt">root@philosopher:~# connect --status</div>
+            <p class="muted">Available for freelance pentests, red team engagements and apprenticeships.</p>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        <div>© 2025 Oscar Escalante</div>
+        <div class="small-muted">Designed with a hacker aesthetic — content focused on security research & education.</div>
       </div>
-    </section>
-
-    <section id="experience" class="section">
-      <div class="terminal">
-        <div class="prompt">root@philosopher:~# cat experience.log</div>
-        <ul>
-          <li>[2024-2025] Cybersecurity Analyst @ EA Piscinas Pro → BlueKeep exploit, phishing simulations, reduced risk exposure by 40%.</li>
-          <li>[2023-Present] Offensive Researcher → 100+ labs, AD attacks, CTFs on TryHackMe/HTB.</li>
-          <li>[2023-Present] Freelance Pentester → 15+ vulns found, posture improved by 20%.</li>
-        </ul>
-      </div>
-    </section>
-
-    <section id="projects" class="section">
-      <div class="terminal">
-        <div class="prompt">root@philosopher:~# ls projects/</div>
-        <ul>
-          <li><b>Roulette Simulator:</b> Gambling strategy testing in Python.</li>
-          <li><b>Web Hacking Labs:</b> Exploitation guides & writeups.</li>
-          <li><b>Linux Tools:</b> Custom offensive scripts.</li>
-        </ul>
-      </div>
-    </section>
-
-    <section id="certs" class="section">
-      <div class="terminal">
-        <div class="prompt">root@philosopher:~# cat certs.txt</div>
-        <ul>
-          <li>eJPTv2 (INE) → In progress</li>
-          <li>ICCA (INE) → Preparing</li>
-          <li>CISCO Ethical Hacker → Verified</li>
-          <li>Hack4U Linux & Bash → ID 6110-3981-2104-2052</li>
-          <li>TryHackMe JPT → Verified</li>
-        </ul>
-      </div>
-    </section>
-
-    <section id="contact" class="section">
-      <div class="terminal">
-        <div class="prompt">root@philosopher:~# connect --social</div>
-        <ul>
-          <li>Email → <a href="mailto:oscardavidescalante2019@gmail.com">oscardavidescalante2019@gmail.com</a></li>
-          <li>GitHub → <a href="https://github.com/Philosopher-Man" target="_blank">Philosopher-Man</a></li>
-          <li>LinkedIn → <a href="http://www.linkedin.com/in/oscarescalantecam" target="_blank">LinkedIn</a></li>
-          <li>TryHackMe → <a href="https://tryhackme.com/p/PhilosopherMan08" target="_blank">Profile</a></li>
-        </ul>
-      </div>
-    </section>
-
-    <footer>
-      <p>© 2025 Oscar Escalante | Hacker Portfolio</p>
     </footer>
   </div>
 
-  <script src="script.js"></script>
+  <script src="script.js" defer></script>
 </body>
 </html>
